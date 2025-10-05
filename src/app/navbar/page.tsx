@@ -5,6 +5,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'; 
 
 type CardNavLink = {
   label: string;
@@ -212,13 +213,24 @@ const CardNav: React.FC<CardNavProps> = ({
             ) : null}
           </div>
 
-          <button
-            type="button"
-            className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 h-full font-medium cursor-pointer transition-colors duration-300"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-          >
-            <span className="mt-2">Get Started</span>
-          </button>
+          <SignedOut>
+                <SignInButton mode="modal">
+                    <button
+                        type="button"
+                        className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 h-full font-medium cursor-pointer transition-colors duration-300"
+                        style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+                    >
+                        <span className="mt-2">Get Started</span>
+                    </button>
+                </SignInButton>
+            </SignedOut>
+            
+            <SignedIn>
+                {/* Display UserButton or a similar link/component for signed-in users */}
+                <div className="hidden md:inline-flex items-center h-full">
+                    <UserButton afterSignOutUrl="/" />
+                </div>
+            </SignedIn> 
         </div>
 
         <div
@@ -272,7 +284,7 @@ const items: CardNavItem[] = [
     bgColor: "#0D0716",
     textColor: "#fff",
     links: [
-      { label: "Company", ariaLabel: "About Company", href: "/about/company" },
+      { label: "About", ariaLabel: "About Company", href: "/about/company" },
       { label: "Guidlines", ariaLabel: "About Guidelines", href: "/about/guidelines" },
     ],
   },
