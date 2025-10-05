@@ -1,11 +1,12 @@
 // src/app/navbar/page.tsx
 "use client";
 
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState,useEffect } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'; 
+import { useUser as useClerkUser } from "@clerk/nextjs";
 
 type CardNavLink = {
   label: string;
@@ -318,6 +319,21 @@ const items: CardNavItem[] = [
 ];
 
 export default function NavbarPage() {
+
+  const { user } = useClerkUser();
+
+  useEffect(() => {
+    // If logged in, sync user with backend API
+    if (user) {
+      fetch("/api/register", {
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then((data) => console.log("Synced with Prisma:", data))
+        .catch((err) => console.error("Sync failed", err));
+    }
+  }, [user]);
+
   return (
     <CardNav
       textLogo="Ayuverse" // Use the new prop here
@@ -329,4 +345,10 @@ export default function NavbarPage() {
       ease="power3.out"
     />
   );
+}
+
+// Implementation of useUser using Clerk's useUser
+function useUser(): { user: any } {
+  const clerk = useClerkUser();
+  return { user: clerk.user };
 }
