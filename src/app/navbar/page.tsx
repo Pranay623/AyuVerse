@@ -7,6 +7,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'; 
 import { useUser as useClerkUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 type CardNavLink = {
   label: string;
@@ -200,9 +201,14 @@ const CardNav: React.FC<CardNavProps> = ({
 
           <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none">
             {textLogo ? (
-              <span className="logo font-bold text-2xl tracking-tighter" style={{ color: menuColor || "#000" }}>
-                {textLogo}
-              </span>
+              <Link href="/landing" passHref>
+                <span
+                  className="logo font-bold text-2xl tracking-tighter cursor-pointer"
+                  style={{ color: menuColor || "#000" }}
+                >
+                  {textLogo}
+                </span>
+              </Link>
             ) : logo ? (
               <Image
                 src={logo}
@@ -215,16 +221,19 @@ const CardNav: React.FC<CardNavProps> = ({
           </div>
 
           <SignedOut>
-                <SignInButton mode="modal">
-                    <button
-                        type="button"
-                        className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 h-full font-medium cursor-pointer transition-colors duration-300"
-                        style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-                    >
-                        <span className="mt-2">Get Started</span>
-                    </button>
-                </SignInButton>
-            </SignedOut>
+            <SignInButton mode="modal">
+              <button
+                type="button"
+                className="card-nav-cta-button border-0 rounded-[calc(0.75rem-0.2rem)] px-4 h-full font-normal cursor-pointer transition-colors duration-300 hover:opacity-75 items-center justify-center"
+                style={{
+                  backgroundColor: buttonBgColor,
+                  color: buttonTextColor,
+                }}
+              >
+                <span className="mt-2">Get Started</span>
+              </button>
+            </SignInButton>
+          </SignedOut>
             
             <SignedIn>
                 {/* Display UserButton or a similar link/component for signed-in users */}
@@ -290,19 +299,19 @@ const items: CardNavItem[] = [
     ],
   },
   {
-    label: "Projects",
+    label: "Features",
     bgColor: "#170D27",
     textColor: "#fff",
     links: [
       {
-        label: "Featured",
-        ariaLabel: "Featured Projects",
-        href: "/projects/featured",
+        label: "Talk To Astrologer",
+        ariaLabel: "Astrologer Features",
+        href: "/features/astrologer",
       },
       {
-        label: "Case Studies",
-        ariaLabel: "Project Case Studies",
-        href: "/projects/case-studies",
+        label: "Get Your Analysis",
+        ariaLabel: "Analysis Features",
+        href: "/features/analysis",
       },
     ],
   },

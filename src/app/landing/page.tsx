@@ -89,12 +89,12 @@ export default function LandingPage() {
           {/* Call to Action */}
           <div className="space-y-6">
             <button className="group relative px-12 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 active:scale-95">
-              <span className="relative z-10">Start Your Analysis</span>
+              <a href="/features/analysis" className="relative z-10">Start Your Analysis</a>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
             
             <p className="text-gray-400 text-sm">
-              Free analysis • No registration required • Results in 30 seconds
+              Free analysis • No Fees required • Results in 30 seconds
             </p>
           </div>
 
